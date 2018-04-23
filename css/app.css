@@ -33,6 +33,13 @@ h1 {
     font-weight: 300;
 }
 
+.deck i {
+    width: 100%;
+    height: 100%;
+    padding-top: 50px;
+    text-align: center;
+    vertical-align: middle;
+}
 /*
  * Styles for the deck of cards
  */

@@ -3,7 +3,8 @@
  */
 var cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 var deck = document.querySelector('.deck');
-var items = deck.children;	
+var items = deck.children;
+var nClick = 0;
 
 
 /*
@@ -16,8 +17,10 @@ var items = deck.children;
 
 	shuffle(cards);
  	for (var item in items) {
-		items[item].children[0].classList.add(cards[item % 8]);
- 	}
+ 		if (item <= 15) {
+			items[item].children[0].classList.add(cards[item % 8]);
+	 	}
+	 }
  
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -46,15 +49,81 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+ 
+ let card1, card2;
+
+	 function clicked(evt) {
+
+		 	var card = evt.target;
+		 	card.parentElement.classList.add("open","show");
+		 	openCard(card);
+
+	 }
 
 
 
-function itemClick() {
 
-	for (var i=0; i<items.length-1; i++) {
-		items[i].addEventListener('click', function(){
-			console.log('clicked');
-		});
-	}
-}
+	 function openCard(evt) {
+
+		 if (nClick == 0) {
+
+			 	nClick += 1;
+			 	card1 = evt;
+			 	card1.parentElement.classList.add("open","show");
+
+		 } else {
+
+			 	nClick += 1;
+			 	card2 = evt;
+			 	card2.parentElement.classList.add("open","show");
+
+		 }
+
+		 if (nClick == 2) {
+
+				 if (card1.classList == card2.classList) {
+
+					 	// matchCards(card1, card2);
+					 	card1.parentElement.classList.remove("open");
+					 	card2.parentElement.classList.remove("open");
+		 				card1.parentElement.classList.add("match");
+		 				card2.parentElement.classList.add("match");
+
+				 } else {
+
+					 	// reverseCards(card1, card2);
+					 	setTimeout(function() {
+					 		card1.parentElement.classList.remove("open","show");
+					 	}, 1000);
+					 	setTimeout(function() {
+					 		card2.parentElement.classList.remove("open","show");
+					 	}, 1000);
+					 	nClick = 0;
+
+				 }
+
+		}
+
+		console.log(nClick);
+	 }
+
+	 
+
+
+	document.querySelector('.deck').addEventListener('click', clicked);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
