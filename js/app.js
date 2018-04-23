@@ -1,6 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
+var cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+var deck = document.querySelector('.deck');
+var items = deck.children;	
 
 
 /*
@@ -9,6 +12,13 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+
+	shuffle(cards);
+ 	for (var item in items) {
+		items[item].children[0].classList.add(cards[item % 8]);
+ 	}
+ 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,3 +46,15 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+
+function itemClick() {
+
+	for (var i=0; i<items.length-1; i++) {
+		items[i].addEventListener('click', function(){
+			console.log('clicked');
+		});
+	}
+}
+
