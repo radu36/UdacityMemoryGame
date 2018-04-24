@@ -83,6 +83,12 @@ function shuffle(array) {
 
 	 	clicks += 1;
 	 	document.querySelector('.moves').innerHTML = clicks;
+
+	 	if (clicks % 20 == 0) {
+	 		var stars = document.querySelector(".stars");
+	 		stars.removeChild(stars.getElementsByTagName('li')[0]);
+	 	}
+
 	 }
 
 
