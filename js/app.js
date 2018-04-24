@@ -13,14 +13,14 @@ var items = deck.children;
  *   - add each card's HTML to the page
  */
 
-
+function shuffleCards() {
 	shuffle(cards);
  	for (var item in items) {
  		if (item <= 15) {
 			items[item].children[0].classList.add(cards[item]);
 	 	}
 	 }
- 
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -165,7 +165,7 @@ function shuffle(array) {
 				res[att].classList.add("card");
 			}
 		}
-		shuffle(cards);
+		shuffleCards();
 		clicks = -1;
 		totalClicks();
 	}
@@ -173,7 +173,7 @@ function shuffle(array) {
 
 	document.querySelector('.deck').addEventListener('click', clicked);
 	document.querySelector('.restart').addEventListener('click', restart);
-
+	shuffleCards();
 
 
 
