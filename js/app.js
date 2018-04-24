@@ -1,10 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-var cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+var cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
 var deck = document.querySelector('.deck');
 var items = deck.children;
-var nClick = 0;
 
 
 /*
@@ -18,7 +17,7 @@ var nClick = 0;
 	shuffle(cards);
  	for (var item in items) {
  		if (item <= 15) {
-			items[item].children[0].classList.add(cards[item % 8]);
+			items[item].children[0].classList.add(cards[item]);
 	 	}
 	 }
  
@@ -51,43 +50,66 @@ function shuffle(array) {
  */
  
  let card1, card2;
+ var nClick = 0;
+ var clicks = 0;
 
-	 function clicked(evt) {
 
+
+ 	// This function turns the card and hides it back after a while, for debugging purposes
+ 	function clicked(evt) {
+
+	 		totalClicks();
+		 	nClick +=1;
 		 	var card = evt.target;
 		 	card.parentElement.classList.add("open","show");
+		 	setTimeout(function() {
+		 		card.parentElement.classList.remove("open","show");
+		 	}, 2000);
 		 	openCard(card);
 
 	 }
 
 
 
+	 // The main counter for total clicks
+	 function totalClicks() {
 
+	 	clicks += 1;
+	 	document.querySelector('.moves').innerHTML = clicks;
+	 }
+
+
+	 // This function compares if the two opened cards have the same drawing
 	 function openCard(evt) {
 
-		 if (nClick == 0) {
-
-			 	nClick += 1;
+		if (nClick == 1) {
 			 	card1 = evt;
-			 	card1.parentElement.classList.add("open","show");
-
-		 } else {
-
-			 	nClick += 1;
-			 	card2 = evt;
-			 	card2.parentElement.classList.add("open","show");
-
+			 	card1.parentElement.id = "card1";
+			 	setTimeout(function() {
+		 			card1.parentElement.removeAttribute("id");
+		 		}, 2000);
 		 }
 
-		 if (nClick == 2) {
+		else if (nClick == 2) {
+			 	card2 = evt;
+			 	card2.parentElement.id = "card2";
+			 	setTimeout(function() {
+		 			card2.parentElement.removeAttribute("id");
+		 		}, 2000);
 
-				 if (card1.classList == card2.classList) {
+
+
+			 	// Still for debugging purposes I try to verify if the cards are different by passing a different ID for eachother
+				if ((card1.classList.value == card2.classList.value) && (card1.parentElement.id != card2.parentElement.id)) {
 
 					 	// matchCards(card1, card2);
-					 	card1.parentElement.classList.remove("open");
-					 	card2.parentElement.classList.remove("open");
+					 	card1.parentElement.classList.remove("open", "show");
+					 	card2.parentElement.classList.remove("open", "show");
+					 	card1.parentElement.removeAttribute("id");
+					 	card2.parentElement.removeAttribute("id");
 		 				card1.parentElement.classList.add("match");
 		 				card2.parentElement.classList.add("match");
+		 				nClick = 0;
 
 				 } else {
 
@@ -98,20 +120,38 @@ function shuffle(array) {
 					 	setTimeout(function() {
 					 		card2.parentElement.classList.remove("open","show");
 					 	}, 1000);
+					 	card1.parentElement.removeAttribute("id");
+					 	card2.parentElement.removeAttribute("id");
 					 	nClick = 0;
-
 				 }
-
 		}
 
-		console.log(nClick);
+
+		// For debugging purposes, I try to hide the cards if someone's trying to click them very fast :P
+		else if ((nClick >= 2) || (nClick == 0)) {
+				card1.parentElement.classList.remove("open","show");
+				card2.parentElement.classList.remove("open","show");
+				nClick = 0;
+		}
+
 	 }
 
-	 
+
+		 
+	function restart() {
+
+		var res = deck.querySelectorAll("li");
+		for (var att in res) {
+			if (att <= 15) {
+				res[att].removeAttribute("class");
+				res[att].classList.add("card");
+			}
+		}
+	}
 
 
 	document.querySelector('.deck').addEventListener('click', clicked);
-
+	document.querySelector('.restart').addEventListener('click', restart);
 
 
 
