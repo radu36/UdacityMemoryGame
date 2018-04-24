@@ -52,6 +52,7 @@ function shuffle(array) {
  let card1, card2;
  var nClick = 0;
  var clicks = 0;
+ var matchingCards = 0;
 
 
 
@@ -64,7 +65,7 @@ function shuffle(array) {
 		 	card.parentElement.classList.add("open","show");
 		 	setTimeout(function() {
 		 		card.parentElement.classList.remove("open","show");
-		 	}, 2000);
+		 	}, 1200);
 		 	openCard(card);
 
 	 }
@@ -87,7 +88,7 @@ function shuffle(array) {
 			 	card1.parentElement.id = "card1";
 			 	setTimeout(function() {
 		 			card1.parentElement.removeAttribute("id");
-		 		}, 2000);
+		 		}, 1200);
 		 }
 
 		else if (nClick == 2) {
@@ -95,7 +96,7 @@ function shuffle(array) {
 			 	card2.parentElement.id = "card2";
 			 	setTimeout(function() {
 		 			card2.parentElement.removeAttribute("id");
-		 		}, 2000);
+		 		}, 1200);
 
 
 
@@ -109,21 +110,27 @@ function shuffle(array) {
 					 	card2.parentElement.removeAttribute("id");
 		 				card1.parentElement.classList.add("match");
 		 				card2.parentElement.classList.add("match");
+		 				matchingCards += 2;
 		 				nClick = 0;
+
+						if (matchingCards == 16) {
+							beatTheGame();
+						}
 
 				 } else {
 
 					 	// reverseCards(card1, card2);
 					 	setTimeout(function() {
 					 		card1.parentElement.classList.remove("open","show");
-					 	}, 1000);
+					 	}, 1200);
 					 	setTimeout(function() {
 					 		card2.parentElement.classList.remove("open","show");
-					 	}, 1000);
+					 	}, 1200);
 					 	card1.parentElement.removeAttribute("id");
 					 	card2.parentElement.removeAttribute("id");
 					 	nClick = 0;
 				 }
+
 		}
 
 
@@ -134,7 +141,18 @@ function shuffle(array) {
 				nClick = 0;
 		}
 
+
 	 }
+
+
+
+	function beatTheGame() {
+
+		setTimeout(function() {
+			alert('You beat the game in ' + clicks + ' clicks!');
+		}, 600);
+
+	}
 
 
 		 
@@ -147,14 +165,14 @@ function shuffle(array) {
 				res[att].classList.add("card");
 			}
 		}
+
+		clicks = -1;
+		totalClicks();
 	}
 
 
 	document.querySelector('.deck').addEventListener('click', clicked);
 	document.querySelector('.restart').addEventListener('click', restart);
-
-
-
 
 
 
