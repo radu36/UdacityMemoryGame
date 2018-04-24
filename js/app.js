@@ -228,6 +228,10 @@ function shuffle(array) {
 	 	card2 = '';
 	 	matchingCards = 0;
 		totalClicks();
+
+		// Rewriting the stars
+		document.querySelector(".stars").innerHTML = "";
+		document.querySelector(".stars").innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
 	}
 
 	// Starting the timer on click
