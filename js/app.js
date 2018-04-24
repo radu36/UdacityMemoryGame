@@ -165,7 +165,7 @@ function shuffle(array) {
 				res[att].classList.add("card");
 			}
 		}
-
+		shuffle(cards);
 		clicks = -1;
 		totalClicks();
 	}
