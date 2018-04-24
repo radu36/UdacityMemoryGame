@@ -13,6 +13,8 @@ var items = deck.children;
  *   - add each card's HTML to the page
  */
 
+
+// Everyday I'm shufflin' :))
 function shuffleCards() {
 	shuffle(cards);
  	for (var item in items) {
@@ -49,6 +51,7 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  
+ // Initializing some 'global vars' I'll work with 
  let card1, card2;
  var nClick = 0;
  var clicks = 0;
@@ -63,6 +66,9 @@ function shuffle(array) {
 		 	nClick +=1;
 		 	var card = evt.target;
 		 	card.parentElement.classList.add("open","show");
+
+		 	// I'm flipping the cards back after 1.2 seconds, for a greater difficulty
+		 	// and forcing the app to debug itself on the go :)
 		 	setTimeout(function() {
 		 		card.parentElement.classList.remove("open","show");
 		 	}, 1200);
@@ -83,6 +89,7 @@ function shuffle(array) {
 	 // This function compares if the two opened cards have the same drawing
 	 function openCard(evt) {
 
+	 	// If this is the first card flipped, I'n passing the first value in card1 variable
 		if (nClick == 1) {
 			 	card1 = evt;
 			 	card1.parentElement.id = "card1";
@@ -91,6 +98,7 @@ function shuffle(array) {
 		 		}, 1200);
 		 }
 
+		 // Passing the second value in card2 variable on the second flip
 		else if (nClick == 2) {
 			 	card2 = evt;
 			 	card2.parentElement.id = "card2";
@@ -100,8 +108,8 @@ function shuffle(array) {
 
 
 
-			 	// Still for debugging purposes I try to verify if the cards are different by passing a different ID for eachother
-				if ((card1.classList.value == card2.classList.value) && (card1.parentElement.id != card2.parentElement.id)) {
+			 	// Still for debugging purposes I try to verify if the cards are different by passing a different ID for eachother and getting sure that we're not talking about something else
+				if ((card1.classList.value == card2.classList.value) && (card1.parentElement.id != 'undefined') && (card2.parentElement.id != 'undefined') && (card1.parentElement.id != card2.parentElement.id)) {
 
 					 	// matchCards(card1, card2);
 					 	card1.parentElement.classList.remove("open", "show");
@@ -128,6 +136,11 @@ function shuffle(array) {
 					 	}, 1200);
 					 	card1.parentElement.removeAttribute("id");
 					 	card2.parentElement.removeAttribute("id");
+
+					 	// Resetting the card1, card2 holders
+					 	// this will trigger an TypeError on Console.log()
+					 	card1 = '';
+					 	card2 = '';
 					 	nClick = 0;
 				 }
 
@@ -145,7 +158,7 @@ function shuffle(array) {
 	 }
 
 
-
+	 // Creating an alert telling you the number of moves
 	function beatTheGame() {
 
 		setTimeout(function() {
@@ -155,24 +168,36 @@ function shuffle(array) {
 	}
 
 
-		 
+	// Resetting the values to 0 and shuffling a new deck
 	function restart() {
 
 		var res = deck.querySelectorAll("li");
 		for (var att in res) {
 			if (att <= 15) {
+				// Resetting the cards
 				res[att].removeAttribute("class");
+				res[att].removeAttribute("id");
 				res[att].classList.add("card");
+				// Resetting the drawings on the cards
+				res[att].children[0].removeAttribute("class");
+				res[att].children[0].classList.add("fa");
 			}
 		}
 		shuffleCards();
 		clicks = -1;
+		nClick = 0;
+		card1 = '';
+	 	card2 = '';
+	 	matchingCards = 0;
 		totalClicks();
 	}
 
 
+	// Adding an event listener to the cards
 	document.querySelector('.deck').addEventListener('click', clicked);
+	// Adding an event listener to the reset button
 	document.querySelector('.restart').addEventListener('click', restart);
+	// Initializing the cards
 	shuffleCards();
 
 
