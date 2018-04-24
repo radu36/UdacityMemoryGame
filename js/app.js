@@ -56,7 +56,7 @@ function shuffle(array) {
  var nClick = 0;
  var clicks = 0;
  var matchingCards = 0;
-
+ var stopTime = false;
 
 
  	// This function turns the card and hides it back after a while, for debugging purposes
@@ -94,25 +94,29 @@ function shuffle(array) {
 	 }
 
 
-	 	// Starting the timer
-	 	var minutesLabel = document.getElementById("minutes");
-		var secondsLabel = document.getElementById("seconds");
-		var totalSeconds = 0;
+	// Starting the timer
+	var minutesLabel = document.getElementById("minutes");
+	var secondsLabel = document.getElementById("seconds");
+	var totalSeconds = 0;
 
-		function setTime() {
-		  ++totalSeconds;
-		  secondsLabel.innerHTML = pad(totalSeconds % 60);
-		  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+	function setTime() {
+		if (stopTime != true) {
+			++totalSeconds;
+			secondsLabel.innerHTML = pad(totalSeconds % 60);
+			minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+		} else {
+			return;
 		}
+	}
 
-		function pad(val) {
-		  var valString = val + "";
-		  if (valString.length < 2) {
-		    return "0" + valString;
-		  } else {
-		    return valString;
-		  }
+	function pad(val) {
+		var valString = val + "";
+		if (valString.length < 2) {
+			return "0" + valString;
+		} else {
+			return valString;
 		}
+	}
 
 
 	 // This function compares if the two opened cards have the same drawing
@@ -193,6 +197,7 @@ function shuffle(array) {
 		setTimeout(function() {
 			alert('You beat the game in ' + clicks + ' clicks!');
 		}, 600);
+		stopTime = true;
 
 	}
 
@@ -212,7 +217,10 @@ function shuffle(array) {
 				res[att].children[0].classList.add("fa");
 			}
 		}
+		// Reseting the timer
 		totalSeconds = 0;
+		stopTime = false;
+		
 		shuffleCards();
 		clicks = -1;
 		nClick = 0;
@@ -228,7 +236,6 @@ function shuffle(array) {
 	 	setInterval(setTime, 1000);
 		document.querySelector('body').removeEventListener('click', startTimer);
 	}
-
 
 	// Adding an event listener to the cards
 	document.querySelector('.deck').addEventListener('click', clicked);
