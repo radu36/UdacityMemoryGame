@@ -84,12 +84,35 @@ function shuffle(array) {
 	 	clicks += 1;
 	 	document.querySelector('.moves').innerHTML = clicks;
 
+
+	 	// Deleting one star at a time if number of moves exceedes multiple by 20
 	 	if (clicks % 20 == 0) {
 	 		var stars = document.querySelector(".stars");
 	 		stars.removeChild(stars.getElementsByTagName('li')[0]);
 	 	}
 
 	 }
+
+
+	 	// Starting the timer
+	 	var minutesLabel = document.getElementById("minutes");
+		var secondsLabel = document.getElementById("seconds");
+		var totalSeconds = 0;
+
+		function setTime() {
+		  ++totalSeconds;
+		  secondsLabel.innerHTML = pad(totalSeconds % 60);
+		  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+		}
+
+		function pad(val) {
+		  var valString = val + "";
+		  if (valString.length < 2) {
+		    return "0" + valString;
+		  } else {
+		    return valString;
+		  }
+		}
 
 
 	 // This function compares if the two opened cards have the same drawing
@@ -189,6 +212,7 @@ function shuffle(array) {
 				res[att].children[0].classList.add("fa");
 			}
 		}
+		totalSeconds = 0;
 		shuffleCards();
 		clicks = -1;
 		nClick = 0;
@@ -201,6 +225,9 @@ function shuffle(array) {
 
 	// Adding an event listener to the cards
 	document.querySelector('.deck').addEventListener('click', clicked);
+
+		// Start timer
+		 	setInterval(setTime, 1000);
 	// Adding an event listener to the reset button
 	document.querySelector('.restart').addEventListener('click', restart);
 	// Initializing the cards

@@ -92,6 +92,10 @@ h1 {
  * Styles for the Score Panel
  */
 
+ .timer {
+    padding-right: 50px;
+ }
+
 .score-panel {
     text-align: left;
     width: 345px;
