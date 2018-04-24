@@ -194,8 +194,11 @@ function shuffle(array) {
 	 // Creating an alert telling you the number of moves
 	function beatTheGame() {
 
+		// Creating a formatted string with the time
+		var time = pad(parseInt(totalSeconds / 60)) + ':' + pad(totalSeconds % 60);
+
 		setTimeout(function() {
-			alert('You beat the game in ' + clicks + ' clicks!');
+			alert('Congrats! You beat the game in ' + time + ' with ' + clicks + ' clicks!');
 		}, 600);
 		stopTime = true;
 
