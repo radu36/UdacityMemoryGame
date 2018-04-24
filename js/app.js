@@ -222,12 +222,17 @@ function shuffle(array) {
 		totalClicks();
 	}
 
+	// Starting the timer on click
+	function startTimer() {
+		// Start timer
+	 	setInterval(setTime, 1000);
+		document.querySelector('body').removeEventListener('click', startTimer);
+	}
+
 
 	// Adding an event listener to the cards
 	document.querySelector('.deck').addEventListener('click', clicked);
-
-		// Start timer
-		 	setInterval(setTime, 1000);
+	document.querySelector('body').addEventListener('click', startTimer);
 	// Adding an event listener to the reset button
 	document.querySelector('.restart').addEventListener('click', restart);
 	// Initializing the cards
